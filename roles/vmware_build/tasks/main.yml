@@ -1,68 +1,68 @@
 ---
-    - name: Create a virtual machine in vCenter
-      vmware_guest:
-        validate_certs: "{{ hostvars[item].validate_certs }}"
-        datacenter: "{{ hostvars[item].vcenter_datacenter }}"
-        folder: "{{ hostvars[item].vcenter_folder }}"
-        name: "{{ item }}"
-        state: poweredon
-        guest_id: "{{ hostvars[item].vcenter_guestid }}"
-        # This is hostname of particular ESXi server on which user wants VM to be deployed
-        cluster: "{{ hostvars[item].vcenter_cluster }}"
-        disk:
-        - size_gb: "{{ size_gb }}"
-          type: "{{ type }}"
-          datastore: "{{ hostvars[item].vcenter_datastore }}"
-        cdrom:
-        - controller_number: 0
-          unit_number: 0
-          state: present
-          type: iso
-          iso_path: "{{ iso_path }}"
-        hardware:
-          memory_mb: "{{ memory_mb }}"
-          num_cpus: "{{ num_cpus }}"
-          scsi: "{{ scsi }}"
-        networks:
-        - name: "{{ hostvars[item].vcenter_network }}"
-          #mac: aa:bb:dd:aa:00:14
-          #ip: "{{ item.ip }}"
-          #netmask: "{{ item.netmask }}"
-          #gateway: "{{ item.gateway }}"
-          device_type: "{{ device_type }}"
-          #dns_servers:
-          #- "{{ item.dns1 }}"
-          #- "{{ item.dns2 }}"
-        wait_for_ip_address: no
-      delegate_to: localhost
-      register: vm
-      #loop: "{{ groups['single'] }}"
-    - name: Send Keystrokes
-      #loop: "{{ groups['all'] }}"
-      vmware_guest_sendkey:
-        validate_certs: "{{ hostvars[item].validate_certs }}"
-        name: "{{ item }}"
-        keys_send:
-          - ESC
-      delegate_to: localhost
-      #loop: "{{ groups['single'] }}"
-      when: vm.changed
-    - name: Send Keystrokes
-      #loop: "{{ groups['all'] }}"
-      vmware_guest_sendkey:
-        validate_certs: "{{ hostvars[item].validate_certs }}"
-        name: "{{ item }}"
-        string_send: "vmlinuz initrd=initrd.img ip={{ hostvars[item].ansible_host }}::{{ hostvars[item].gateway }}:{{ hostvars[item].netmask }}:{{ item }}:{{ hostvars[item].iface }}:none nameserver={{ hostvars[item].dns1 }} nameserver={{ hostvars[item].dns2 }} inst.ks={{ hostvars[item].ksurl }}"
-      delegate_to: localhost
-      #loop: "{{ groups['single'] }}"
-      when: vm.changed
-    - name: Send Keystrokes
-      #loop: "{{ groups['all'] }}"
-      vmware_guest_sendkey:
-        validate_certs: "{{ hostvars[item].validate_certs }}"
-        name: "{{ item }}"
-        keys_send:
-          - ENTER
-      delegate_to: localhost
-      #loop: "{{ groups['single'] }}"
-      when: vm.changed
+  - name: Create a virtual machine in vCenter
+    vmware_guest:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      folder: "{{ hostvars[item].vcenter_folder }}"
+      name: "{{ item }}"
+      state: poweredon
+      guest_id: "{{ hostvars[item].vcenter_guestid }}"
+      # This is hostname of particular ESXi server on which user wants VM to be deployed
+      cluster: "{{ hostvars[item].vcenter_cluster }}"
+      disk:
+      - size_gb: "{{ size_gb }}"
+        type: "{{ type }}"
+        datastore: "{{ hostvars[item].vcenter_datastore }}"
+      cdrom:
+      - controller_number: 0
+        unit_number: 0
+        state: present
+        type: iso
+        iso_path: "{{ iso_path }}"
+      hardware:
+        memory_mb: "{{ memory_mb }}"
+        num_cpus: "{{ num_cpus }}"
+        scsi: "{{ scsi }}"
+      networks:
+      - name: "{{ hostvars[item].vcenter_network }}"
+        #mac: aa:bb:dd:aa:00:14
+        #ip: "{{ item.ip }}"
+        #netmask: "{{ item.netmask }}"
+        #gateway: "{{ item.gateway }}"
+        device_type: "{{ device_type }}"
+        #dns_servers:
+        #- "{{ item.dns1 }}"
+        #- "{{ item.dns2 }}"
+      wait_for_ip_address: no
+    delegate_to: localhost
+    register: vm
+    #loop: "{{ groups['single'] }}"
+  - name: Send Keystrokes
+    #loop: "{{ groups['all'] }}"
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ item }}"
+      keys_send:
+        - ESC
+    delegate_to: localhost
+    #loop: "{{ groups['single'] }}"
+    when: vm.changed
+  - name: Send Keystrokes
+    #loop: "{{ groups['all'] }}"
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ item }}"
+      string_send: "vmlinuz initrd=initrd.img ip={{ hostvars[item].ansible_host }}::{{ hostvars[item].gateway }}:{{ hostvars[item].netmask }}:{{ item }}:{{ hostvars[item].iface }}:none nameserver={{ hostvars[item].dns1 }} nameserver={{ hostvars[item].dns2 }} inst.ks={{ hostvars[item].ksurl }}"
+    delegate_to: localhost
+    #loop: "{{ groups['single'] }}"
+    when: vm.changed
+  - name: Send Keystrokes
+    #loop: "{{ groups['all'] }}"
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ item }}"
+      keys_send:
+        - ENTER
+    delegate_to: localhost
+    #loop: "{{ groups['single'] }}"
+    when: vm.changed
