@@ -52,7 +52,7 @@
     vmware_guest_sendkey:
       validate_certs: "{{ hostvars[item].validate_certs }}"
       name: "{{ item }}"
-      string_send: "vmlinuz initrd=initrd.img ip={{ hostvars[item].ansible_host }}::{{ hostvars[item].gateway }}:{{ hostvars[item].netmask }}:{{ item }}:{{ hostvars[item].iface }}:none nameserver={{ hostvars[item].dns1 }} nameserver={{ hostvars[item].dns2 }} inst.ks={{ hostvars[item].ksurl }}"
+      string_send: "vmlinuz initrd=initrd.img ip={{ hostvars[item].ansible_host }}::{{ hostvars[item].gateway }}:{{ hostvars[item].netmask }}:{{ item }}:{{ hostvars[item].iface }}:none nameserver={{ hostvars[item].dns1 }} nameserver={{ hostvars[item].dns2 }} inst.ks={{ hostvars[item].ksurl }} {{ extra_kernel_args }}"
     delegate_to: localhost
     #loop: "{{ groups['single'] }}"
     when: vm.changed
