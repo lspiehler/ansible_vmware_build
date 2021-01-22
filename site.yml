@@ -1,0 +1,10 @@
+---
+  - hosts: localhost
+    connection: local
+    gather_facts: false
+    tasks:
+      - name: Build VMs
+        include_role:
+          name: vmware_build
+        loop: "{{ groups['all'] }}"  
+...
