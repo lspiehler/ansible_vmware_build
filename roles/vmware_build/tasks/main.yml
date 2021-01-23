@@ -10,26 +10,26 @@
       # This is hostname of particular ESXi server on which user wants VM to be deployed
       cluster: "{{ hostvars[item].vcenter_cluster }}"
       disk:
-      - size_gb: "{{ size_gb }}"
-        type: "{{ type }}"
+      - size_gb: "{{ hostvars[item].size_gb }}"
+        type: "{{ hostvars[item].type }}"
         datastore: "{{ hostvars[item].vcenter_datastore }}"
       cdrom:
       - controller_number: 0
         unit_number: 0
         state: present
         type: iso
-        iso_path: "{{ iso_path }}"
+        iso_path: "{{ hostvars[item].iso_path }}"
       hardware:
-        memory_mb: "{{ memory_mb }}"
-        num_cpus: "{{ num_cpus }}"
-        scsi: "{{ scsi }}"
+        memory_mb: "{{ hostvars[item].memory_mb }}"
+        num_cpus: "{{ hostvars[item].num_cpus }}"
+        scsi: "{{ hostvars[item].scsi }}"
       networks:
       - name: "{{ hostvars[item].vcenter_network }}"
         #mac: aa:bb:dd:aa:00:14
         #ip: "{{ item.ip }}"
         #netmask: "{{ item.netmask }}"
         #gateway: "{{ item.gateway }}"
-        device_type: "{{ device_type }}"
+        device_type: "{{ hostvars[item].device_type }}"
         #dns_servers:
         #- "{{ item.dns1 }}"
         #- "{{ item.dns2 }}"
