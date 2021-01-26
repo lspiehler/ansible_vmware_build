@@ -42,11 +42,11 @@ part /boot --fstype ext4 --size=1024
 #part pv.01 --size=1 --grow --ondisk=${DISK}
 volgroup sysvg --pesize=4096 pv.01
 logvol / --fstype="ext4" --size=16384 --vgname=sysvg --name=root_lv
-logvol /usr --fstype="ext4" --size=10240 --vgname=sysvg --name=var_usr
+logvol /usr --fstype="ext4" --size=10240 --vgname=sysvg --name=usr_lv
 logvol /var --fstype="ext4" --size=5120 --vgname=sysvg --name=var_lv
-logvol /opt --fstype="ext4" --size=2048 --vgname=sysvg --name=var_opt
-logvol /home --fstype="ext4" --size=81920 --vgname=sysvg --name=var_home
-logvol swap --fstype="ext4" --size=4096 --vgname=sysvg --name=lv_swap
+logvol /opt --fstype="ext4" --size=2048 --vgname=sysvg --name=opt_lv
+logvol /home --fstype="ext4" --size=81920 --vgname=sysvg --name=home_lv
+logvol swap --fstype="ext4" --size=4096 --vgname=sysvg --name=swap_lv
 
 rootpw --iscrypted $6$vMXfFeQNEgDGy5.7$2hublUvL7txrLv.GSzNd5UYVnR/KtHL2PLosJ.TQxRC/rknq53StzaZXwK03OyjtaHzdRkvq6Fybfbl/pYYtT.
 user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1OwocsDyHLq2/9KcZduDGAYf2WkaGc2f7r7XtoSRIOJ4IU9C97rZkImuUJhfQspsCBo2VG/Cu1G.
