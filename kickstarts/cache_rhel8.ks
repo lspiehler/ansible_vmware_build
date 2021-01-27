@@ -40,13 +40,21 @@ clearpart --all --initlabel
 part /boot --fstype ext4 --size=1024
 %include /tmp/part
 #part pv.01 --size=1 --grow --ondisk=${DISK}
-volgroup sysvg --pesize=4096 pv.01
-logvol / --fstype="ext4" --size=16384 --vgname=sysvg --name=root_lv
-logvol /usr --fstype="ext4" --size=10240 --vgname=sysvg --name=usr_lv
-logvol /var --fstype="ext4" --size=5120 --vgname=sysvg --name=var_lv
-logvol /opt --fstype="ext4" --size=2048 --vgname=sysvg --name=opt_lv
-logvol /home --fstype="ext4" --size=81920 --vgname=sysvg --name=home_lv
-logvol swap --fstype="ext4" --size=4096 --vgname=sysvg --name=swap_lv
+volgroup sys_vg --pesize=16384 pv.01
+logvol / --fstype="ext4" --size=16384 --vgname=sys_vg --name=root_lv
+logvol /usr --fstype="ext4" --size=10240 --vgname=sys_vg --name=usr_lv
+logvol /var --fstype="ext4" --size=5120 --vgname=sys_vg --name=var_lv
+logvol /opt --fstype="ext4" --size=2048 --vgname=sys_vg --name=opt_lv
+logvol /home --fstype="ext4" --size=81920 --vgname=sys_vg --name=home_lv
+logvol swap --fstype="ext4" --size=4096 --vgname=sys_vg --name=swap_lv
+volgroup epic_vg --pesize=16384 pv.02
+logvol /epic --fstype="ext4" --size=19456 --vgname=epic_vg --name=epic_lv
+volgroup epicfiles_vg --pesize=16384 pv.03
+logvol /epic/epicfiles --fstype="ext4" --size=29696 --vgname=epicfiles_vg --name=epicfiles_lv
+volgroup tst_vg --pesize=16384 pv.04
+logvol /epic/tst --fstype="ext4" --size=148480 --vgname=tst_vg --name=tst_lv
+volgroup poc_vg --pesize=16384 pv.05
+logvol /epic/poc --fstype="ext4" --size=60416 --vgname=poc_vg --name=poc_lv
 
 rootpw --iscrypted $6$vMXfFeQNEgDGy5.7$2hublUvL7txrLv.GSzNd5UYVnR/KtHL2PLosJ.TQxRC/rknq53StzaZXwK03OyjtaHzdRkvq6Fybfbl/pYYtT.
 user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1OwocsDyHLq2/9KcZduDGAYf2WkaGc2f7r7XtoSRIOJ4IU9C97rZkImuUJhfQspsCBo2VG/Cu1G.
