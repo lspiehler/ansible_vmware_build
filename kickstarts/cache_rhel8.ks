@@ -39,10 +39,10 @@ zerombr
 clearpart --all --initlabel
 part /boot --fstype ext4 --size=1024
 %include /tmp/part
-part pv.02 --grow --onpart=sdb
-part pv.03 --grow --onpart=sdc
-part pv.04 --grow --onpart=sdd
-part pv.05 --grow --onpart=sde
+part pv.02 --grow --onpart=/dev/sdb
+part pv.03 --grow --onpart=/dev/sdc
+part pv.04 --grow --onpart=/dev/sdd
+part pv.05 --grow --onpart=/dev/sde
 #part pv.01 --size=1 --grow --ondisk=${DISK}
 volgroup sys_vg --pesize=16384 pv.01
 logvol / --fstype="ext4" --size=16384 --vgname=sys_vg --name=root_lv
