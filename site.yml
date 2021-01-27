@@ -2,9 +2,11 @@
   - hosts: localhost
     connection: local
     gather_facts: false
+    vars:
+      match_host: all
     tasks:
       - name: Build VMs
         include_role:
           name: vmware_build
-        loop: "{{ groups['all'] }}"  
+        loop: "{{ query('inventory_hostnames', match_host) }}"
 ...
