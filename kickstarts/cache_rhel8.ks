@@ -8,7 +8,7 @@ else
 	DISK="sda"
 fi
 
-echo "ignoredisk --only-use=${DISK}" > /tmp/onlyuse
+echo "ignoredisk --only-use=${DISK},sdb,sdc,sdd,sde" > /tmp/onlyuse
 echo "bootloader --location=mbr --boot-drive=${DISK} --append=\"console=tty0 console=ttyS0,119200n8\"" > /tmp/bootloader
 echo "part pv.01 --size=1 --grow --ondisk=${DISK}" > /tmp/part
 
