@@ -1,0 +1,80 @@
+---
+  - name: Create a virtual machine in vCenter
+    vmware_guest:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      folder: "{{ hostvars[item].vcenter_folder }}"
+      name: "{{ item }}"
+      #state: poweredoff
+      guest_id: "{{ hostvars[item].vcenter_guestid }}"
+      cluster: "{{ hostvars[item].vcenter_cluster }}"
+      disk:
+      - size_gb: "{{ hostvars[item].disks.pv_os.size }}"
+        type: "{{ hostvars[item].disks.pv_os.type }}"
+        datastore: "{{ hostvars[item].disks.pv_os.datastore }}"
+      cdrom:
+      - controller_number: 0
+        unit_number: 0
+        state: present
+        type: iso
+        iso_path: "{{ hostvars[item].iso_path }}"
+      hardware:
+        memory_mb: "{{ hostvars[item].memory_mb }}"
+        num_cpus: "{{ hostvars[item].num_cpus }}"
+        scsi: "{{ hostvars[item].disks.pv_os.scsi_type }}"
+      networks:
+      - name: "{{ hostvars[item].vcenter_network }}"
+        device_type: "{{ hostvars[item].device_type }}"
+      wait_for_ip_address: no
+    delegate_to: localhost
+    register: vm
+  #- name: Return VM variable
+  #  ansible.builtin.debug:
+  #    msg: " {{ vm }}"
+  - name: Add disks to VM
+    vmware_guest_disk:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      name: "{{ vm.instance.hw_name }}"
+      disk:
+        - size_gb: "{{ disk.value.size }}"
+          type: "{{ disk.value.type }}"
+          datastore: "{{ disk.value.datastore }}"
+          scsi_controller: "{{ disk.value.scsi_controller }}"
+          unit_number: "{{ disk.value.unit_number }}"
+          scsi_type: "{{ disk.value.scsi_type }}"
+    with_dict: "{{ hostvars[item].disks }}"
+    loop_control:
+      loop_var: disk
+    when: vm.changed
+  - name: Power on virtual machine in vCenter
+    vmware_guest:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      folder: "{{ hostvars[item].vcenter_folder }}"
+      name: "{{ item }}"
+      state: poweredon
+    when: vm.changed
+  - name: Send Keystrokes
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ vm.instance.hw_name }}"
+      keys_send:
+        - ESC
+    delegate_to: localhost
+    when: vm.changed
+  - name: Send Keystrokes
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ vm.instance.hw_name }}"
+      string_send: "vmlinuz initrd=initrd.img ip={{ hostvars[item].ansible_host }}::{{ hostvars[item].gateway }}:{{ hostvars[item].netmask }}:{{ item }}:{{ hostvars[item].iface }}:none nameserver={{ hostvars[item].dns1 }} nameserver={{ hostvars[item].dns2 }} inst.ks={{ hostvars[item].ksurl }} {{ hostvars[item].extra_kernel_args }}"
+    delegate_to: localhost
+    when: vm.changed
+  - name: Send Keystrokes
+    vmware_guest_sendkey:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      name: "{{ vm.instance.hw_name }}"
+      keys_send:
+        - ENTER
+    delegate_to: localhost
+    when: vm.changed
