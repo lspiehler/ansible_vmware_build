@@ -1,14 +1,24 @@
 ---
+  #- name: Check disk configuration
+  #  ansible.builtin.debug:
+  #    msg: "{{ disk.controller_number }}"
+  #  loop: "{{ hostvars[item].disks }}"
+  #  loop_control:
+  #    loop_var: disk
   - name: Create a virtual machine in vCenter
     vmware_guest:
       validate_certs: "{{ hostvars[item].validate_certs }}"
       datacenter: "{{ hostvars[item].vcenter_datacenter }}"
       folder: "{{ hostvars[item].vcenter_folder }}"
       name: "{{ item }}"
-      state: poweredon
+      state: present
       guest_id: "{{ hostvars[item].vcenter_guestid }}"
       cluster: "{{ hostvars[item].vcenter_cluster }}"
-      disk: "{{ hostvars[item].disks }}"
+      #disk: "{{ hostvars[item].disks }}"
+      disk:
+      - size_gb: "{{ hostvars[item].disks[0].size_gb }}"
+        type: "{{ hostvars[item].disks[0].type }}"
+        datastore: "{{ hostvars[item].disks[0].datastore }}"
       cdrom:
       - controller_number: 0
         unit_number: 0
@@ -24,7 +34,43 @@
         device_type: "{{ hostvars[item].device_type }}"
       wait_for_ip_address: no
     delegate_to: localhost
+    #ignore_errors: true
     register: vm
+  #- name: Gather disk facts from virtual machine using UUID
+  #  vmware_guest_disk_info:
+  #    validate_certs: "{{ hostvars[item].validate_certs }}"
+  #    datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+  #    name: "{{ vm.instance.hw_name }}"
+  #  delegate_to: localhost
+  #  register: disk_info
+  #- name: Check disk configuration
+  #  ansible.builtin.debug:
+  #    msg: "{{ disk_info }}"
+  #     msg: "{{ vm }}"
+  - name: Arrange disk controllers
+    vmware_guest_disk:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      name: "{{ vm.instance.hw_name }}"
+      disk:
+        - size_gb: "{{ disk.size_gb }}"
+          type: "{{ disk.type }}"
+          datastore: "{{ disk.datastore }}"
+          scsi_controller: "{{ disk.controller_number }}"
+          unit_number: "{{ disk.unit_number }}"
+          scsi_type: "{{ disk.controller_type }}"
+    loop: "{{ hostvars[item].disks }}"
+    loop_control:
+      loop_var: disk
+    when: vm.changed
+  - name: Power on virtual machine in vCenter
+    vmware_guest:
+      validate_certs: "{{ hostvars[item].validate_certs }}"
+      datacenter: "{{ hostvars[item].vcenter_datacenter }}"
+      folder: "{{ hostvars[item].vcenter_folder }}"
+      name: "{{ vm.instance.hw_name }}"
+      state: poweredon
+    when: vm.changed
   - name: Send Keystrokes
     vmware_guest_sendkey:
       validate_certs: "{{ hostvars[item].validate_certs }}"
