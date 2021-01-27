@@ -2,6 +2,8 @@
 
 ## Install Ansible
 Example below is for CentOS 8
+
+Note: Some functionality requires features added in Ansible 2.10.
 ```
 sudo dnf -y install python3-pip
 sudo pip3 install --upgrade pip
