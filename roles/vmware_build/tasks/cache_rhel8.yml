@@ -91,7 +91,7 @@
       validate_certs: "{{ hostvars[item].validate_certs }}"
       name: "{{ vm.instance.hw_name }}"
       keys_send:
-        #- ENTER
-        - SPACE
+        - ENTER
+        #- SPACE
     delegate_to: localhost
     when: vm.changed
