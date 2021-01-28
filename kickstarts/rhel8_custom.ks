@@ -45,14 +45,14 @@ part pv.02 --size=1 --grow --ondisk=sdb
 #part pv.05 --size=1 --grow --ondisk=sde
 #part pv.01 --size=1 --grow --ondisk=${DISK}
 volgroup sys_vg --pesize=16384 pv.01
-logvol / --fstype="ext4" --size=10240 --vgname=sys_vg --name=root_lv
+logvol / --fstype="ext4" --size=15360 --vgname=sys_vg --name=root_lv
 logvol /usr --fstype="ext4" --size=10240 --vgname=sys_vg --name=usr_lv
 logvol /var --fstype="ext4" --size=5120 --vgname=sys_vg --name=var_lv
 logvol /opt --fstype="ext4" --size=2048 --vgname=sys_vg --name=opt_lv
-#logvol /home --fstype="ext4" --size=2048 --vgname=sys_vg --name=home_lv
+logvol /tmp --fstype="ext4" --size=5120 --vgname=sys_vg --name=home_lv
 logvol swap --fstype="ext4" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup epic_vg --pesize=16384 pv.02
-logvol /epic --fstype="ext4" --size=19456 --vgname=epic_vg --name=epic_lv
+logvol /epic --fstype="ext4" --size=40960 --vgname=epic_vg --name=epic_lv
 #volgroup epicfiles_vg --pesize=16384 pv.03
 #logvol /epic/epicfiles --fstype="ext4" --size=29696 --vgname=epicfiles_vg --name=epicfiles_lv
 #volgroup tst_vg --pesize=16384 pv.04
