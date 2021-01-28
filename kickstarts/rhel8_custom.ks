@@ -49,6 +49,7 @@ logvol / --fstype="ext4" --size=15360 --vgname=sys_vg --name=root_lv
 logvol /usr --fstype="ext4" --size=10240 --vgname=sys_vg --name=usr_lv
 logvol /var --fstype="ext4" --size=5120 --vgname=sys_vg --name=var_lv
 logvol /opt --fstype="ext4" --size=2048 --vgname=sys_vg --name=opt_lv
+logvol /epic_core --fstype="ext4" --size=5120 --vgname=sys_vg --name=epic_core_lv
 logvol /tmp --fstype="ext4" --size=5120 --vgname=sys_vg --name=tmp_lv
 logvol swap --fstype="ext4" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup epic_vg --pesize=16384 pv.02
