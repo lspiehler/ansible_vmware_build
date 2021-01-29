@@ -37,8 +37,6 @@ text
 %include /tmp/bootloader
 zerombr
 clearpart --all --initlabel
-#clearpart --drives=sda --all --initlabel --disklabel=msdos
-#clearpart --drives=sdb --all --initlabel --disklabel=gpt
 part /boot --fstype ext4 --size=1024
 %include /tmp/part
 part pv.02 --grow --onpart=sdb
