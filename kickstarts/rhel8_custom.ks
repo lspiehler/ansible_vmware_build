@@ -24,7 +24,7 @@ keyboard us
 timezone America/Chicago --isUtc --ntpservers=0.rhel.pool.ntp.org,1.rhel.pool.ntp.org,2.rhel.pool.ntp.org,3.rhel.pool.ntp.org
 #auth --useshadow --enablemd5
 auth --passalgo=sha512 --useshadow
-selinux --enforcing
+selinux --disabled
 firewall --enabled --ssh
 services --enabled=NetworkManager,sshd
 eula --agreed
