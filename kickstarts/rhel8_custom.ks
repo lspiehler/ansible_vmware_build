@@ -36,7 +36,9 @@ text
 #bootloader --location=mbr --boot-drive=${DISK} --append="console=tty0 console=ttyS0,119200n8"
 %include /tmp/bootloader
 zerombr
-clearpart --all --initlabel
+#clearpart --all --initlabel
+clearpart --drives=sda --all --initlabel --disklabel=msdos
+clearpart --drives=sdb --all --initlabel --disklabel=gpt
 part /boot --fstype ext4 --size=1024
 %include /tmp/part
 part pv.02 --grow --onpart=sdb
