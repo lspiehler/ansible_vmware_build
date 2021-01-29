@@ -10,7 +10,7 @@ fi
 
 echo "ignoredisk --only-use=${DISK},sdb" > /tmp/onlyuse
 echo "bootloader --location=mbr --boot-drive=${DISK} --append=\"console=tty0 console=ttyS0,119200n8\"" > /tmp/bootloader
-echo "part pv.01 --grow --onpart=${DISK}" > /tmp/part
+echo "part pv.01 --grow --ondisk=${DISK}" > /tmp/part
 
 %end
 
@@ -36,8 +36,8 @@ text
 #bootloader --location=mbr --boot-drive=${DISK} --append="console=tty0 console=ttyS0,119200n8"
 %include /tmp/bootloader
 zerombr
-clearpart --all --initlabel --disklabel=gpt
-#part /boot --fstype ext4 --size=1024
+clearpart --all --initlabel
+part /boot --fstype ext4 --size=1024
 %include /tmp/part
 part pv.02 --grow --onpart=sdb
 #part pv.03 --size=1 --grow --ondisk=sdc
@@ -45,7 +45,7 @@ part pv.02 --grow --onpart=sdb
 #part pv.05 --size=1 --grow --ondisk=sde
 #part pv.01 --size=1 --grow --ondisk=${DISK}
 volgroup sys_vg --pesize=16384 pv.01
-logvol /boot --fstype="ext4" --size=1024 --vgname=sys_vg --name=boot_lv
+#logvol /boot --fstype="ext4" --size=1024 --vgname=sys_vg --name=boot_lv
 logvol / --fstype="ext4" --size=15360 --vgname=sys_vg --name=root_lv
 logvol /usr --fstype="ext4" --size=10240 --vgname=sys_vg --name=usr_lv
 logvol /var --fstype="ext4" --size=5120 --vgname=sys_vg --name=var_lv
