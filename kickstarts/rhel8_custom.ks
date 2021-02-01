@@ -63,7 +63,7 @@ logvol /epic --fstype="ext4" --size=40960 --vgname=epic_vg --name=epic_lv
 #logvol /epic/poc --fstype="ext4" --size=60416 --vgname=poc_vg --name=poc_lv
 
 rootpw --iscrypted $6$vMXfFeQNEgDGy5.7$2hublUvL7txrLv.GSzNd5UYVnR/KtHL2PLosJ.TQxRC/rknq53StzaZXwK03OyjtaHzdRkvq6Fybfbl/pYYtT.
-user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1OwocsDyHLq2/9KcZduDGAYf2WkaGc2f7r7XtoSRIOJ4IU9C97rZkImuUJhfQspsCBo2VG/Cu1G.
+#user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1OwocsDyHLq2/9KcZduDGAYf2WkaGc2f7r7XtoSRIOJ4IU9C97rZkImuUJhfQspsCBo2VG/Cu1G.
 
 #url --url="http://mirror.centos.org/centos/7/os/x86_64/"
 #url --url="http://dev.spiehlerfamily.com/centos/7/os/x86_64/"
@@ -77,7 +77,7 @@ user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1Owoc
 %post --log="/var/log/ks-post.log"
 
 /usr/sbin/groupadd -g 999999 provision
-/usr/sbin/useradd -u 999999 -g 999999 provision
+/usr/sbin/useradd -u 999999 -g 999999 -m provision -s /bin/bash
 /bin/mkdir /home/provision/.ssh/
 /bin/chmod 700 /home/provision/.ssh/
 /bin/cat << 'EOF' > /home/provision/.ssh/authorized_keys
