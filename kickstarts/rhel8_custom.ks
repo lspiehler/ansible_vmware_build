@@ -25,7 +25,7 @@ timezone America/Chicago --isUtc --ntpservers=0.rhel.pool.ntp.org,1.rhel.pool.nt
 #auth --useshadow --enablemd5
 auth --passalgo=sha512 --useshadow
 selinux --disabled
-firewall --enabled --ssh
+firewall --disabled
 services --enabled=NetworkManager,sshd
 eula --agreed
 %include /tmp/onlyuse
