@@ -77,7 +77,7 @@ user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1Owoc
 %post --log="/var/log/ks-post.log"
 
 /usr/sbin/groupadd -g 9999 provision
-/usr/sbin/useradd -u 9999 -g 9999 -m provision -s /bin/bash
+/usr/sbin/useradd -u 9999 -g 9999 provision -s /bin/bash
 /bin/mkdir /home/provision/.ssh/
 /bin/chmod 700 /home/provision/.ssh/
 /bin/cat << 'EOF' > /home/provision/.ssh/authorized_keys
