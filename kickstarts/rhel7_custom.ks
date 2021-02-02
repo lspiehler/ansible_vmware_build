@@ -54,7 +54,7 @@ logvol / --fstype="xfs" --size=15360 --vgname=sys_vg --name=root_lv
 logvol /home --fstype="xfs" --size=4096 --vgname=sys_vg --name=tmp_home
 logvol swap --fstype="swap" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup app_vg --pesize=16384 pv.02
-logvol /epic --fstype="xfs" --size=40960 --vgname=app_vg --name=epic_lv
+logvol /var --fstype="xfs" --size=40960 --vgname=app_vg --name=var_lv
 #volgroup epicfiles_vg --pesize=16384 pv.03
 #logvol /epic/epicfiles --fstype="xfs" --size=29696 --vgname=epicfiles_vg --name=epicfiles_lv
 #volgroup tst_vg --pesize=16384 pv.04
