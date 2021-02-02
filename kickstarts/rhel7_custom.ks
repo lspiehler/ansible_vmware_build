@@ -21,7 +21,7 @@ lang en_US.UTF-8
 #network  --bootproto=dhcp --device=eth0 --onboot=on --hostname=<?php echo $_GET['hostname']; ?>
 
 keyboard us
-timezone America/Chicago --isUtc --ntpservers=0.rhel.pool.ntp.org,1.rhel.pool.ntp.org,2.rhel.pool.ntp.org,3.rhel.pool.ntp.org
+timezone America/Chicago --isUtc --ntpservers=lctiadgc01.lcmchealth.org,lctiadgc02.lcmchealth.org,lcucadgc01.lcmchealth.org,lcucadgc02.lcmchealth.org
 #auth --useshadow --enablemd5
 auth --passalgo=sha512 --useshadow
 selinux --enforcing
