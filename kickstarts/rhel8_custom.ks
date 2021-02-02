@@ -21,7 +21,7 @@ lang en_US.UTF-8
 #network  --bootproto=dhcp --device=eth0 --onboot=on --hostname=<?php echo $_GET['hostname']; ?>
 
 keyboard us
-timezone America/Chicago --isUtc --ntpservers=0.rhel.pool.ntp.org,1.rhel.pool.ntp.org,2.rhel.pool.ntp.org,3.rhel.pool.ntp.org
+timezone America/Chicago --isUtc --ntpservers=lctiadgc01.lcmchealth.org,lctiadgc02.lcmchealth.org,lcucadgc01.lcmchealth.org,lcucadgc02.lcmchealth.org
 #auth --useshadow --enablemd5
 auth --passalgo=sha512 --useshadow
 selinux --disabled
@@ -52,7 +52,7 @@ logvol /var --fstype="ext4" --size=5120 --vgname=sys_vg --name=var_lv
 logvol /opt --fstype="ext4" --size=2048 --vgname=sys_vg --name=opt_lv
 logvol /epic_core --fstype="ext4" --size=5120 --vgname=sys_vg --name=epic_core_lv
 logvol /tmp --fstype="ext4" --size=5120 --vgname=sys_vg --name=tmp_lv
-logvol swap --fstype="ext4" --size=4096 --vgname=sys_vg --name=swap_lv
+logvol swap --fstype="swap" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup epic_vg --pesize=16384 pv.02
 logvol /epic --fstype="ext4" --size=40960 --vgname=epic_vg --name=epic_lv
 #volgroup epicfiles_vg --pesize=16384 pv.03
