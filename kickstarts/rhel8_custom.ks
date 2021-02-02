@@ -30,7 +30,7 @@ services --enabled=NetworkManager,sshd
 eula --agreed
 %include /tmp/onlyuse
 #ignoredisk --only-use=${DISK}
-reboot
+reboot --eject
 text
 
 #bootloader --location=mbr --boot-drive=${DISK} --append="console=tty0 console=ttyS0,119200n8"
