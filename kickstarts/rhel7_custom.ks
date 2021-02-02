@@ -16,9 +16,6 @@ echo "part pv.01 --grow --ondisk=${DISK}" > /tmp/part
 
 install
 lang en_US.UTF-8
-#network  --bootproto=static --device=ens160 --onboot=on --hostname=<?php echo $_GET['hostname']; ?> --ip=<?php echo $_GET['ip']; ?> --netmask=<?php echo $_GET['mask']; ?> --gateway=<?php echo $_GET['gw']; ?> --nameserver=<?php echo $_GET['dns']; ?>
-
-#network  --bootproto=dhcp --device=eth0 --onboot=on --hostname=<?php echo $_GET['hostname']; ?>
 
 keyboard us
 timezone America/Chicago --isUtc --ntpservers=lctiadgc01.lcmchealth.org,lctiadgc02.lcmchealth.org,lcucadgc01.lcmchealth.org,lcucadgc02.lcmchealth.org
@@ -51,7 +48,7 @@ logvol / --fstype="xfs" --size=15360 --vgname=sys_vg --name=root_lv
 #logvol /var --fstype="xfs" --size=5120 --vgname=sys_vg --name=var_lv
 #logvol /opt --fstype="xfs" --size=2048 --vgname=sys_vg --name=opt_lv
 #logvol /epic_core --fstype="xfs" --size=5120 --vgname=sys_vg --name=epic_core_lv
-logvol /home --fstype="xfs" --size=4096 --vgname=sys_vg --name=tmp_home
+logvol /home --fstype="xfs" --size=4096 --vgname=sys_vg --name=home_lv
 logvol swap --fstype="swap" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup app_vg --pesize=16384 pv.02
 logvol /var --fstype="xfs" --size=40960 --vgname=app_vg --name=var_lv
@@ -63,13 +60,6 @@ logvol /var --fstype="xfs" --size=40960 --vgname=app_vg --name=var_lv
 #logvol /epic/poc --fstype="xfs" --size=60416 --vgname=poc_vg --name=poc_lv
 
 rootpw --iscrypted $6$vMXfFeQNEgDGy5.7$2hublUvL7txrLv.GSzNd5UYVnR/KtHL2PLosJ.TQxRC/rknq53StzaZXwK03OyjtaHzdRkvq6Fybfbl/pYYtT.
-#user --name=provision --iscrypted --password $6$KiaU8eBo/XcfCgEQ$HUvR2jvsSk1OwocsDyHLq2/9KcZduDGAYf2WkaGc2f7r7XtoSRIOJ4IU9C97rZkImuUJhfQspsCBo2VG/Cu1G.
-
-#url --url="http://mirror.centos.org/centos/7/os/x86_64/"
-#url --url="http://dev.spiehlerfamily.com/centos/7/os/x86_64/"
-
-#url --url="http://lcuccssiemconn.lcmchealth.org/rhel/8/os/x86_64/"
-#repo --name="AppStream" --baseurl="http://lcuccssiemconn.lcmchealth.org/rhel/8/os/x86_64/AppStream"
 
 %packages
 @core
