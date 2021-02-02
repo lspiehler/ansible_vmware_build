@@ -51,7 +51,12 @@ logvol / --fstype="xfs" --size=15360 --vgname=sys_vg --name=root_lv
 logvol /home --fstype="xfs" --size=4096 --vgname=sys_vg --name=home_lv
 logvol swap --fstype="swap" --size=4096 --vgname=sys_vg --name=swap_lv
 volgroup app_vg --pesize=16384 pv.02
-logvol /var --fstype="xfs" --size=40960 --vgname=app_vg --name=var_lv
+logvol /var/cache/pulp --fstype="xfs" --size=20480 --vgname=app_vg --name=var_cache_pulp_lv
+logvol /var/lib/pulp --fstype="xfs" --size=102400 --vgname=app_vg --name=var_lib_pulp_lv
+logvol /var/lib/mongodb --fstype="xfs" --size=51200 --vgname=app_vg --name=var_lib_mongodb_lv
+logvol /var/log --fstype="xfs" --size=10240 --vgname=app_vg --name=var_log_lv
+logvol /var/opt/rh/rh-postgresql12 --fstype="xfs" --size=10240 --vgname=app_vg --name=var_opt_rh_rh-postgresql12_lv
+logvol /var/spool/squid --fstype="xfs" --size=10240 --vgname=app_vg --name=var_spool_squid_lv
 #volgroup epicfiles_vg --pesize=16384 pv.03
 #logvol /epic/epicfiles --fstype="xfs" --size=29696 --vgname=epicfiles_vg --name=epicfiles_lv
 #volgroup tst_vg --pesize=16384 pv.04
